@@ -80,8 +80,27 @@ while Repeat do
                 coinsToUSD = (math.round(coinsToUSD, 0.01))
                 return coinsToUSD
             end
+            function formatValue(n)
+                local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
+            return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+        end
+            local space = ""
 
-            print("$".. convertCoins(conversionCost))
+            if convertCoins(conversionCost) >= 10000 then 
+                space = "                              |"
+            elseif convertCoins(conversionCost) >= 1000 then
+                space = "                               |"
+            elseif convertCoins(conversionCost) >= 100 then
+                space = "                                 |"
+            elseif convertCoins(conversionCost) >= 10 then
+                space = "                                  |"
+            elseif convertCoins(conversionCost) >= 1 then
+                space = "                                   |"
+            elseif convertCoins(conversionCost) >= 0 then
+                space = "                                   |"
+            end
+
+            print("|$".. formatValue(convertCoins(conversionCost)) .. space)
         elseif modeChoice == 2 then
             local buffer = io.read()
 
