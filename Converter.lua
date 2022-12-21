@@ -83,6 +83,8 @@ if modeChoice == 1 then
 elseif modeChoice == 2 then
     local buffer = io.read()
 
+    print(line)
+
     print("|Please Enter Booster Cookie Price       |")
 
     local boosterCookie = io.read()
@@ -132,7 +134,18 @@ elseif modeChoice == 2 then
         usdToCoins = usdToCoins * CoinsPerDollar
         return usdToCoins
     end
-    print(convertUSD(usdAmount))
+    function math.sign(v)
+        return (v >= 0 and 1) or -1
+    end
+    function math.round(v, bracket)
+        bracket = bracket or 1
+        return math.floor(v/bracket + math.sign(v) * 0.5) * bracket
+    end
+    function formatValue(n)
+            local left,num,right = string.match(n,'^([^%d]*%d)(%d*)(.-)$')
+        return left..(num:reverse():gsub('(%d%d%d)','%1,'):reverse())..right
+    end
+    print(formatValue((math.round(convertUSD(usdAmount), 1))) .. " Coins")
 elseif modeChoice ~= 1 or modeChoice ~= 2 then
     print("Not a option!")
 end
